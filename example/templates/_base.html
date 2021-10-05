@@ -1,0 +1,63 @@
+{% load django_htmx %}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% if title %}{{title}}{% else %}django-htmx example app{%endif%}</title>
+  <link rel="stylesheet" href="{% static 'mvp.css' %}">
+  <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css">
+  <script async="true" src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
+
+  <!-- An example of how we can configure htmx -->
+  <!-- https://htmx.org/docs/#config -->
+  <meta name="htmx-config" content='{"historyCacheSize": 15}'>
+</head>
+
+<!--
+  Enable htmx extensions for all requests:
+  * debug: https://htmx.org/extensions/debug/
+  * event-header: https://htmx.org/extensions/event-header/
+-->
+<body hx-ext="debug, event-header, preload">
+  <header>
+    <nav hx-boost="true" hx-push-url="true" preload="mouseover">
+      <h1>
+        <a href="/">
+          django-htmx example app
+        </a>
+      </h1>
+      <ul>
+        <li>
+          <a href="/csrf-demo/">CSRF Demo</a>
+        </li>
+        <li>
+          <a href="/error-demo/">Error Demo</a>
+        </li>
+        <li>
+          <a href="/middleware-tester/">Middleware Tester</a>
+        </li>
+        <li>
+          <a href="/partial-rendering/">Partial Rendering</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    {% block main %}{% endblock %}
+  </main>
+  <footer>
+    <hr>
+    <p>
+      For more information see <a href="https://github.com/adamchainz/django-htmx">django-htmx</a> and <a href="https://htmx.org/">htmx</a>.
+    </p>
+  </footer>
+  <script defer="true" src="{% static 'htmx.js' %}"></script>
+  <script defer="true" src="{% static 'ext/debug.js' %}"></script>
+  <script defer="true" src="{% static 'ext/event-header.js' %}"></script>
+  <script defer="true" src="https://unpkg.com/htmx.org/dist/ext/preload.js"></script>
+  {% django_htmx_script %}
+  <script defer="true" src="{% static 'progressbar.js' %}"></script>
+</body>
+</html>
