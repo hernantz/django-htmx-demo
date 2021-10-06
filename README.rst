@@ -1,15 +1,24 @@
 Example Application
 ===================
 
-Use Python 3.9 to set up and run with these commands:
+This project was extracted from the demo app in the
+[django-htmx](https://github.com/adamchainz/django-htmx) app.
+
+It adds the [preload](https://htmx.org/extensions/preload/) + `hx-boost`
+extension and the [Nprogress](https://ricostacruz.com/nprogress/) plugin to show the loading indicator for all ajax
+requests.
+
+Install
+-------
 
 .. code-block:: sh
 
    python -m venv venv
    source venv/bin/activate
    python -m pip install -U pip
-   python -m pip install -r requirements.txt -e ..
+   python -m pip install -r requirements.txt
    DEBUG=1 python manage.py runserver
+
 
 Open it at http://127.0.0.1:8000/ .
 
