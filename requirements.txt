@@ -4,6 +4,7 @@
 #
 #    pip-compile
 #
+django-htmx
 asgiref==3.4.1
     # via django
 django==3.2.5
