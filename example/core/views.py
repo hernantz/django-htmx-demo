@@ -22,15 +22,11 @@ def index(request: HttpRequest) -> HttpResponse:
 @require_http_methods(("GET",))
 @cache_control(max_age=3600)
 def csrf_demo(request: HttpRequest) -> HttpResponse:
-    import time
-    time.sleep(.3)
     return render(request, "csrf-demo.html")
 
 
 @require_http_methods(("POST",))
 def csrf_demo_checker(request: HttpRequest) -> HttpResponse:
-    import time
-    time.sleep(2)
     form = OddNumberForm(request.POST)
     if form.is_valid():
         number = form.cleaned_data["number"]
