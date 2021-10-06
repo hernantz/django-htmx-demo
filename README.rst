@@ -2,10 +2,10 @@ Example Application
 ===================
 
 This project was extracted from the demo app in the
-[django-htmx](https://github.com/adamchainz/django-htmx) app.
+`django-htmx <https://github.com/adamchainz/django-htmx>`_ app.
 
-It adds the [preload](https://htmx.org/extensions/preload/) + `hx-boost`
-extension and the [Nprogress](https://ricostacruz.com/nprogress/) plugin to show the loading indicator for all ajax
+It adds the `preload <https://htmx.org/extensions/preload/>`_ + ``hx-boost``
+extension and the `Nprogress <https://ricostacruz.com/nprogress/>`_ plugin to show the loading indicator for all ajax
 requests.
 
 Install
