@@ -114,3 +114,39 @@ def partial_rendering(request: HttpRequest) -> HttpResponse:
             "page": page,
         },
     )
+
+
+from django.views.generic import FormView
+
+
+from django import forms
+from django.core.exceptions import ValidationError
+
+class SignupForm(forms.Form):
+    name = forms.CharField(label="Your name", max_length=100)
+    email = forms.EmailField(label='Your email', max_length=100)
+    repeat_email = forms.EmailField(label='Repeat your email', max_length=100)
+
+    def clean_name(self):
+        name = self.cleaned_data['name']
+        if "demo" != name:
+            raise ValidationError("Only demo is a valid name")
+        return name
+
+    def clean_repeat_email(self):
+        if self.cleaned_data.get('email') != self.cleaned_data.get('repeat_email'):
+            raise ValidationError("Emails must match!")
+        return self.cleaned_data['repeat_email']
+
+
+from django.urls import reverse_lazy
+
+class SignUpView(FormView):
+    form_class: forms.Form = SignupForm
+    template_name: str = 'form-demo.html'
+    success_url = reverse_lazy('form-demo')
+
+    def form_valid(self, form):
+        if self.request.htmx:
+            return self.render_to_response(self.get_context_data(form=form))
+        return super().form_valid(form)

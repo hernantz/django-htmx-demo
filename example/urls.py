@@ -11,11 +11,13 @@ from example.core.views import (
     middleware_tester,
     middleware_tester_table,
     partial_rendering,
+    SignUpView
 )
 
 urlpatterns = [
     path("", index),
     path("csrf-demo/", csrf_demo),
+    path("form-demo/", SignUpView.as_view(), name="form-demo"),
     path("csrf-demo/checker/", csrf_demo_checker),
     path("error-demo/", error_demo),
     path("error-demo/trigger/", error_demo_trigger),

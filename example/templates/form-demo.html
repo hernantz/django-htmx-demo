@@ -1,0 +1,60 @@
+{% extends "_base.html" %}
+
+{% block main %}
+
+  <style>
+  .error {
+    color: red;
+  }
+  .error input {
+    border-color: red;
+  }
+  </style>
+
+  <section>
+    <p>
+      This form shows you how to implement partial form validation with <code>htmx</code>, using <a href="https://dev.htmx.org/attributes/hx-select/"> the<code>hx-select</code> attribute</a>.
+    </p>
+  </section>
+  <section>
+    <form method="post">
+      {% csrf_token %}
+
+      <div
+          id="name_field" {% if form.name.errors %}class="error"{% endif %}
+          hx-select="#name_field"
+          hx-post="{% url 'form-demo' %}"
+          hx-trigger="blur from:find input"
+          hx-target="#name_field">
+        {{form.name.label_tag}}
+        {{form.name}}
+        {{ form.name.errors }}
+      </div>
+
+      <div
+          id="email_field"
+          {% if form.email.errors %}class="error"{% endif %}
+          hx-select="#email_field"
+          hx-post="{% url 'form-demo' %}"
+          hx-trigger="blur from:find input"
+          hx-target="#email_field">
+        {{form.email.label_tag}}
+        {{form.email}}
+        {{ form.email.errors }}
+      </div>
+
+      <div id="repeat_email_field"
+          {% if form.repeat_email.errors %}class="error"{% endif %}
+          hx-select="#repeat_email_field"
+          hx-post="{% url 'form-demo' %}"
+          hx-trigger="blur from:find input"
+          hx-target="#repeat_email_field">
+        {{form.repeat_email.label_tag}}
+        {{form.repeat_email}}
+        {{ form.repeat_email.errors }}
+      </div>
+
+      <input type="submit" value="Submit">
+    </form>
+  </section>
+{% endblock %}
