@@ -6,9 +6,11 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.cache import cache_control
+from django.views.generic import FormView
+from django.urls import reverse_lazy
 from faker import Faker
 
-from example.core.forms import OddNumberForm
+from example.core.forms import OddNumberForm, SignupForm
 
 
 @require_http_methods(("GET",))
@@ -114,3 +116,14 @@ def partial_rendering(request: HttpRequest) -> HttpResponse:
             "page": page,
         },
     )
+
+
+class SignUpView(FormView):
+    form_class = SignupForm
+    template_name: str = 'form-demo.html'
+    success_url = reverse_lazy('form-demo')
+
+    def form_valid(self, form):
+        if self.request.htmx:
+            return self.render_to_response(self.get_context_data(form=form))
+        return super().form_valid(form)
