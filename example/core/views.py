@@ -127,12 +127,6 @@ class SignupForm(forms.Form):
     email = forms.EmailField(label='Your email', max_length=100)
     repeat_email = forms.EmailField(label='Repeat your email', max_length=100)
 
-    def clean_name(self):
-        name = self.cleaned_data['name']
-        if "demo" != name:
-            raise ValidationError("Only demo is a valid name")
-        return name
-
     def clean_repeat_email(self):
         if self.cleaned_data.get('email') != self.cleaned_data.get('repeat_email'):
             raise ValidationError("Emails must match!")
