@@ -6,9 +6,11 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.cache import cache_control
+from django.views.generic import FormView
+from django.urls import reverse_lazy
 from faker import Faker
 
-from example.core.forms import OddNumberForm
+from example.core.forms import OddNumberForm, SignupForm
 
 
 @require_http_methods(("GET",))
@@ -116,27 +118,8 @@ def partial_rendering(request: HttpRequest) -> HttpResponse:
     )
 
 
-from django.views.generic import FormView
-
-
-from django import forms
-from django.core.exceptions import ValidationError
-
-class SignupForm(forms.Form):
-    name = forms.CharField(label="Your name", max_length=100)
-    email = forms.EmailField(label='Your email', max_length=100)
-    repeat_email = forms.EmailField(label='Repeat your email', max_length=100)
-
-    def clean_repeat_email(self):
-        if self.cleaned_data.get('email') != self.cleaned_data.get('repeat_email'):
-            raise ValidationError("Emails must match!")
-        return self.cleaned_data['repeat_email']
-
-
-from django.urls import reverse_lazy
-
 class SignUpView(FormView):
-    form_class: forms.Form = SignupForm
+    form_class = SignupForm
     template_name: str = 'form-demo.html'
     success_url = reverse_lazy('form-demo')
 
